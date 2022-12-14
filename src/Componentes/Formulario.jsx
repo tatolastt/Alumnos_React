@@ -12,6 +12,20 @@ function Formulario({alumnos,setAlumnos}) {
   const [error, setError] = useState(false);
 
 
+  function generarId () {
+
+    // creacion de un numero random lo transformamos a string y le sacamos los primeros dos numeros
+    const random = Math.random().toString(36).substr(2);
+
+    //creacion de la fecha actual y la transformamos a string 
+    const fecha = Date.now().toString(36);
+
+    return random + fecha;
+  }
+
+  
+
+
   const handleSubmit = (e) => {
     e.preventDefault(); //Previene el comportamiento por defecto del formulario que es recargar la pagina
 
@@ -19,34 +33,31 @@ function Formulario({alumnos,setAlumnos}) {
 
     if([nombre, clase, email, fecha, datos].includes("")){
       setError(true);
-      
+      return; 
     }
-    else{
-      console.log("Formulario Enviado");
-      setError(false);
 
+    console.log("Formulario Enviado");
+    setError(false);
+ 
+    // objeto de alumno
 
-      // objeto de alumno
-
-      const objetoAlumno = {
-        nombre,
-        clase,
-        email,
-        fecha,
-        datos
-      }
+    const objetoAlumno = {
+      nombre,
+      clase,
+      email,
+      fecha,
+      datos,
+      id: generarId()
+    }
        
-      setAlumnos(...alumnos, objetoAlumno);
+    setAlumnos([...alumnos, objetoAlumno]);
 
-      //reiniciar el formulario
-      setAlumnos("");
-      setClase("");
-      setEmail("");
-      setFecha("");
-      setDatos("");
-    }
-    
-
+    //reiniciar el formulario
+    setNombre("");
+    setClase("");
+    setEmail("");
+    setFecha("");
+    setDatos("");
   }
 
 
